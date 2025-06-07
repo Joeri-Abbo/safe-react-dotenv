@@ -1,5 +1,9 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+const secretKey = process.env.REACT_APP_SECRET_KEY;
+
+if (!secretKey) {
+  console.error("REACT_APP_SECRET_KEY is not defined in the .env file.");
+}
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +13,11 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <div className="App">
+      <h1>Safe Environment Variable Demo</h1>
+      <p>The secret is: {secretKey ? "Loaded Successfully" : "Not Found"}</p>
+      <p>{secretKey}</p>
+    </div>
+  );
 }
